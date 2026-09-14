@@ -153,13 +153,13 @@ public final class FingerprintSplittingGraphExtraction {
             Set<Integer> enabledLX = S.enabled(l, x);
 
             if (enabledLX.size() < l.size()) {
-                // ∃q∈l: x∉out(q) → direct strict-subset split (lines 7-9)
+                // ∃q∈l: x∉out(q) → direct strict-subset split
                 C.add(FingerprintSplittingGraph.canonical(enabledLX));
                 F = FingerprintCCSExpression.choice(F,
                     FingerprintCCSExpression.prefix(x, FingerprintCCSExpression.ZERO));
 
             } else {
-                // enabled(l,x) = l → induced split via LCA (lines 11-13)
+                // enabled(l,x) = l → induced split via LCA
                 Set<Integer> lAfterX = S.after(l, x);
                 Set<Set<Integer>> lcaSet = Y.lca(lAfterX);
                 if (!lcaSet.isEmpty()) {
@@ -174,8 +174,15 @@ public final class FingerprintSplittingGraphExtraction {
                     }
                     if (anyAdded) {
                         FingerprintCCSExpression wv = Y.witness(v);
-                        F = FingerprintCCSExpression.choice(F,
-                            FingerprintCCSExpression.prefix(x, wv != null ? wv : FingerprintCCSExpression.ZERO));
+                        // if l has the exact same states as lAfterX, skip using the witness
+                        if (l.equals(lAfterX)) {
+                            F = FingerprintCCSExpression.choice(F, wv != null ? wv : FingerprintCCSExpression.ZERO);
+                        }
+
+                        else {
+                            F = FingerprintCCSExpression.choice(F,
+                                FingerprintCCSExpression.prefix(x, wv != null ? wv : FingerprintCCSExpression.ZERO));
+                        }
                     }
                 }
                 // else: no LCA yet — skip this x
@@ -219,7 +226,7 @@ public final class FingerprintSplittingGraphExtraction {
             Set<Integer> v = lcaSet.iterator().next();
             Set<Set<Integer>> pi = Y.inducedSplit(l, a, v);
 
-            // Line 19: add l \ enabled(l, a) to each element of Π
+            // Add l \ enabled(l, a) to each element of Π
             Set<Integer> notEnabledA = new LinkedHashSet<>(l);
             notEnabledA.removeAll(S.enabled(l, a));
 

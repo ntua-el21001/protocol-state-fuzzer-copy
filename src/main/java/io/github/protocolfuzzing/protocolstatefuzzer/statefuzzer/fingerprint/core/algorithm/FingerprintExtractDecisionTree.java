@@ -171,8 +171,6 @@ public class FingerprintExtractDecisionTree {
                 for (int q: P) {
                     if (S.transition(q, mu) < 0 && combined.isOriginalState(q))
                         newStuck.add(q);
-                    // System.err.println("For input " + converter.labelName(mu) + " model " + combined.modelOf(q) + "
-                    // goes to stuck");
                 }
             }
             FingerprintNode extended = compDG(Pmu, newStuck, F.getContinuation(), converter.labelName(mu));
@@ -184,8 +182,6 @@ public class FingerprintExtractDecisionTree {
                 otherNode.addChild(resNode);
                 Set<Integer> newP = S.after(S.after(newStuck, resLabel), emptyLabel); // For stuck states (they can only
                                                                                       // be input states)
-                // System.err.println("At leaf with stuck states " + stuckStates + ", newP after reset and empty is " +
-                // newP);
                 FingerprintNode child = compDG(newP, Collections.emptySet(), FingerprintCCSExpression.ZERO, "");
                 resNode.addChild(child);
 
