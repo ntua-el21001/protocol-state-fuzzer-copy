@@ -286,7 +286,7 @@ public class FingerprintGenerateLTS {
         for (int m = 0; m < size; m++) {
             nOrig[m] = machines.get(m).getMealyMachine().getStates().size();
             // add reset edge from all original states to initial state
-            nMid[m] = numberTransitions(machines.get(m).getMealyMachine(), machines.get(m).getAlphabet()) + nOrig[m];
+            nMid[m] = numberTransitions(machines.get(m).getMealyMachine(), machines.get(m).getAlphabet()) + 1;
         }
 
         // Flat offsets
@@ -359,7 +359,6 @@ public class FingerprintGenerateLTS {
                 stateToModel[mid] = m;
                 T[src][inLabel] = mid;
                 T[mid][outLabel] = dst;
-                t++;
             }
         }
 

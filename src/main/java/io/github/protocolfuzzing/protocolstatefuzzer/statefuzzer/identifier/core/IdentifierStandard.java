@@ -395,9 +395,6 @@ public class IdentifierStandard<I, O extends MapperOutput<O, P>, P, E>
     private MealyMachineWrapper<I, O> createHyp(String filePath) {
 
         String hypPath = filePath + File.separator + "learnedModel.dot";
-        // String alphabetPath = filePath + File.separator + "alphabet.xml";
-
-        // Alphabet<I> hypAlphabet;
 
         if (new File(hypPath).exists()) {
             LOGGER.info("Building hypothesis from file {}", hypPath);
@@ -405,15 +402,6 @@ public class IdentifierStandard<I, O extends MapperOutput<O, P>, P, E>
             LOGGER.info("File {} does not exist, cannot build hypothesis", hypPath);
             throw new RuntimeException("File " + hypPath + " does not exist, cannot build hypothesis");
         }
-
-        // if (new File(alphabetPath).exists()) {
-        // LOGGER.debug("Create hypothesis alphabet from file {}", alphabetPath);
-        // hypAlphabet = alphabetBuilder.build(new IdentifierAlphabetStore(alphabetPath));
-        // LOGGER.debug("Hyp Alphabet: {}", hypAlphabet);
-        // } else {
-        // LOGGER.info("File {} does not exist, using the ADG alphabet for the hypothesis", alphabetPath);
-        // hypAlphabet = adgAlphabet;
-        // }
 
         try {
             LOGGER.debug("Will return alphabet: {}", this.alphabet);

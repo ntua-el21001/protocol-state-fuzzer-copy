@@ -8,8 +8,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -196,7 +199,18 @@ public final class FingerprintSplittingGraphExtraction {
 
     private boolean tryInputSplit(FingerprintSplittingGraph Y, Set<Integer> l) {
         FingerprintLTS S = A.getCombined().automaton;
+        Map<Integer, Integer> enabledMap = new LinkedHashMap<>();
         for (int a: S.in(l)) {
+            Set<Integer> enabledLA = S.enabled(l, a);
+            enabledMap.put(a, enabledLA.size());
+        }
+        ArrayList<Integer> sortedActions = new ArrayList<>(enabledMap.keySet());
+        Collections.sort(sortedActions, (a1, a2) -> {
+            int cmp = Integer.compare(enabledMap.get(a2), enabledMap.get(a1)); // larger sizes first
+            return (cmp != 0) ? cmp : Integer.compare(a1, a2);
+        });
+
+        for (int a: sortedActions) {
             Set<Integer> lAfterA = S.after(l, a);
             Set<Set<Integer>> lcaSet = Y.lca(lAfterA);
             if (lcaSet.isEmpty())

@@ -476,7 +476,7 @@ public class CommandLineParser<M> {
                 for (String model: identifiedModels) {
                     LOGGER.info("Running conformance test for model {}", model);
 
-                    String filePath = stateFuzzerConfig.getIdentifierConfig().getConformance() + File.separator + model;
+                    String filePath = stateFuzzerConfig.getIdentifierConfig().getConformance() + model;
 
                     try {
                         identifyResult = identifier.conformanceTest(filePath);

@@ -85,13 +85,15 @@ public class FingerprintStandard<I> implements Fingerprint {
             implSets.add(new LinkedHashSet<>(e.getValue()));
         }
 
+        LOGGER.info("Loaded {} models, {} unique", machines.size(), uniqueMachines.size());
+
         FingerprintGenerateLTS converter = new FingerprintGenerateLTS();
         FingerprintAutomaton A = new FingerprintAutomaton(converter);
 
         A.calculateCombined(uniqueMechines, uniqueNames);
 
-        LOGGER.info("Combined LTS: {} states%n", A.getCombined().automaton.getNumStates());
-        LOGGER.info("Alphabet: {} inputs, {} outputs (+δ)%n",
+        LOGGER.info("Combined LTS: {} states", A.getCombined().automaton.getNumStates());
+        LOGGER.info("Alphabet: {} inputs, {} outputs (+δ)",
             converter.numInputs(), converter.numOutputs() - 1);
 
         LOGGER.info("Start the fingerprint extraction process");
