@@ -165,15 +165,22 @@ public class FingerprintExtractDecisionTree {
             }
         } else if (F.isPrefix()) {
             int mu = F.getLabel();
+            FingerprintCCSExpression newF = F.getContinuation();
             Set<Integer> Pmu = S.after(P, mu);
             Set<Integer> newStuck = new LinkedHashSet<>(stuckStates);
-            if (S.isInput(mu)) {
+            if (mu == resLabel) {
+                Pmu.addAll(S.after(stuckStates, resLabel));
+                newStuck.clear(); // reset clears stuck states
+                newF = FingerprintCCSExpression.prefix(emptyLabel, FingerprintCCSExpression.ZERO); // reset clears stuck
+                                                                                                   // states, so no
+                                                                                                   // continuation
+            } else if (S.isInput(mu)) {
                 for (int q: P) {
                     if (S.transition(q, mu) < 0 && combined.isOriginalState(q))
                         newStuck.add(q);
                 }
             }
-            FingerprintNode extended = compDG(Pmu, newStuck, F.getContinuation(), converter.labelName(mu));
+            FingerprintNode extended = compDG(Pmu, newStuck, newF, converter.labelName(mu));
 
             if (S.isInput(mu) && !newStuck.isEmpty()) {
 

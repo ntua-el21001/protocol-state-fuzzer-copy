@@ -86,6 +86,7 @@ public class FingerprintStandard<I> implements Fingerprint {
         }
 
         LOGGER.info("Loaded {} models, {} unique", machines.size(), uniqueMachines.size());
+        LOGGER.debug("Sets of models with the same behaviour: {}", implSets);
 
         FingerprintGenerateLTS converter = new FingerprintGenerateLTS();
         FingerprintAutomaton A = new FingerprintAutomaton(converter);
