@@ -49,7 +49,6 @@ public class FingerprintParser<I> {
                 return name;
             }
         };
-
         this.alphabetBuilder = alphabetBuilder;
     }
 
@@ -112,16 +111,11 @@ public class FingerprintParser<I> {
                     LOGGER.error("Error while loading model {}, error: {}", subdirName,
                         e.getMessage());
                 }
-
             } else {
                 LOGGER.info("Directory {} does not contain a model, moving to next", subdirName);
-
             }
-
         }
-
         return result;
-
     }
 
     /**
@@ -169,5 +163,4 @@ public class FingerprintParser<I> {
             .buildProtocolModel(path, processor);
         return model;
     }
-
 }

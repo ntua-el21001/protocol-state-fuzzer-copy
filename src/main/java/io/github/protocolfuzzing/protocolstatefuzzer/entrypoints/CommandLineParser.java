@@ -369,7 +369,7 @@ public class CommandLineParser<M> {
      * The possible executions are: 1) testing using a test runner or a
      * timing probe or 2) fuzzing using the state fuzzer, 3) differential testing
      * using the differential oracle, 4) extracting a fingerprint ADG or
-     * 5) identifying the sut.
+     * 5) identifying the SUT.
      * <p>
      * It uses {@link #executeCommand(StateFuzzerConfig, JCommander, String[])} or
      * {@link #executeCommand(DiffTesterConfig)} or {@link #executeCommand(FingerprintConfig)} depending on the type of
@@ -468,7 +468,7 @@ public class CommandLineParser<M> {
 
             /*
              * Perform optional Conformance Test to verify that the results of the identification
-             * process actually match with the SUL. Useful to avoid false positive matches
+             * process actually match with the SUT. Useful to avoid false positive matches
              */
 
             if (stateFuzzerConfig.getIdentifierConfig().getConformance() != null) {

@@ -111,7 +111,7 @@ public class ProcessResult<M> {
     /**
      * Returns the result of fingerprinting.
      * <p>
-     * Default value: null if the command was not dingerprinting.
+     * Default value: null if the command was not fingerprinting.
      *
      * @return the result of fingerprinting
      */
@@ -122,7 +122,7 @@ public class ProcessResult<M> {
     /**
      * Returns true if the instance contains a learner result.
      *
-     * @return true if a learner result is present, false otherwies
+     * @return true if a learner result is present, false otherwise
      */
     public boolean hasLearnerResult() {
         return learnerResult != null;

@@ -23,7 +23,6 @@ public class FingerprintComputeCompatibility {
         CompatibilityResult(int numStates) {
             isInvalid = new boolean[numStates];
         }
-
     }
 
     /** Default constructor */

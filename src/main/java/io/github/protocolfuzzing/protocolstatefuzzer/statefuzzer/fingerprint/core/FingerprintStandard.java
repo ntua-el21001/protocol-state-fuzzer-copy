@@ -72,7 +72,14 @@ public class FingerprintStandard<I> implements Fingerprint {
 
         for (int i = 0; i < machines.size(); i++) {
             // Use canonical behavioural signature instead of raw file content
-            String key = FingerprintMealyEquivalence.canonicalSignature(machines.get(i));
+            String key = null;
+            try {
+                key = FingerprintMealyEquivalence.canonicalSignature(machines.get(i));
+            }
+            catch (IllegalStateException e) {
+                LOGGER.error("Error while processing model {}: {}", modelNames.get(i), e.getMessage());
+                continue;
+            }
             uniqueMachines.putIfAbsent(key, machines.get(i));
             namesByContent.computeIfAbsent(key, k -> new ArrayList<>()).add(modelNames.get(i));
         }

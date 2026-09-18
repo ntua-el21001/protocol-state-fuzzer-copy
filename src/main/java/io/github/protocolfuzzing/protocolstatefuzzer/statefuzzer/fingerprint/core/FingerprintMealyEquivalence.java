@@ -27,7 +27,7 @@ public final class FingerprintMealyEquivalence {
     private static final Logger LOGGER = LogManager.getLogger();
 
     /**
-     * Default constructore
+     * Default constructor
      */
     private FingerprintMealyEquivalence() {}
 
@@ -35,16 +35,18 @@ public final class FingerprintMealyEquivalence {
      * Returns {@code true} iff {@code a} and {@code b} define the same
      * input/output behaviour (up to state renaming).
      *
-     * @param  <I> the input type of the machines
-     * @param  <O> the output type of the machines
-     * @param  a   the first machine
-     * @param  b   the second machine
+     * @param  <I>                   the input type of the machines
+     * @param  <O>                   the output type of the machines
+     * @param  a                     the first machine
+     * @param  b                     the second machine
      *
-     * @return     {@code true} iff {@code a} and {@code b} define the same
-     *                 input/output behaviour (up to state renaming).
+     * @return                       {@code true} iff {@code a} and {@code b} define the same
+     *                                   input/output behaviour (up to state renaming).
+     *
+     * @throws IllegalStateException if either machine is not well-formed
      */
     public static <I, O> boolean equivalent(MealyMachineWrapper<I, O> a,
-        MealyMachineWrapper<I, O> b) {
+        MealyMachineWrapper<I, O> b) throws IllegalStateException {
         return canonicalSignature(a).equals(canonicalSignature(b));
     }
 
@@ -55,13 +57,15 @@ public final class FingerprintMealyEquivalence {
      * The string encodes the minimised, BFS-ordered transition table:
      * {@code "INPUTS:<i0>,<i1>,...;TRANSITIONS:<state>:<input>=<output>-><dst>;..."}
      *
-     * @param  <I> the input type of m
-     * @param  <O> the output type of m
-     * @param  m   a {@link MealyMachine} (not modified)
+     * @param  <I>                   the input type of m
+     * @param  <O>                   the output type of m
+     * @param  m                     a {@link MealyMachine} (not modified)
      *
-     * @return     canonical signature string
+     * @return                       canonical signature string
+     *
+     * @throws IllegalStateException if the Mealy Machine is not well-formed
      */
-    public static <I, O> String canonicalSignature(MealyMachineWrapper<I, O> m) {
+    public static <I, O> String canonicalSignature(MealyMachineWrapper<I, O> m) throws IllegalStateException {
         MealyIndex<?, I, O> idx = new MealyIndex<>(m.getMealyMachine(), m.getAlphabet());
         if (idx.initState < 0)
             return "<empty>";
@@ -94,10 +98,12 @@ public final class FingerprintMealyEquivalence {
         /**
          * Constructor for the MealyIndex
          *
-         * @param m        the Mealy Machine
-         * @param alphabet the alphabet for the Machine
+         * @param  m                     the Mealy Machine
+         * @param  alphabet              the alphabet for the Machine
+         *
+         * @throws IllegalStateException if the Mealy Machine is not well-formed
          */
-        MealyIndex(MealyMachine<S, I, ?, O> m, Alphabet<I> alphabet) {
+        MealyIndex(MealyMachine<S, I, ?, O> m, Alphabet<I> alphabet) throws IllegalStateException {
             Map<String, Integer> stateIdx = new LinkedHashMap<>();
             for (S s: m.getStates())
                 stateIdx.put(s.toString(), stateIdx.size());
@@ -188,7 +194,7 @@ public final class FingerprintMealyEquivalence {
                         continue;
                     int d = dst(packed);
                     if (remap[d] < 0)
-                        continue; // unreachable dst (shouldn't happen)
+                        throw new IllegalStateException("Unreachable dst " + d + " from reachable src " + s);
                     this.trans[ns][i] = pack(out(packed), remap[d]);
                 }
             }

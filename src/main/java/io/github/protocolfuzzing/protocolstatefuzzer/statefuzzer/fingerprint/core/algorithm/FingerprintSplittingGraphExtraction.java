@@ -17,7 +17,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 /**
- * Creates the Splitting graph of the LTS automaton
+ * Creates the Splitting Graph of the LTS automaton
  */
 public final class FingerprintSplittingGraphExtraction {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -25,7 +25,7 @@ public final class FingerprintSplittingGraphExtraction {
     private final FingerprintSplittingGraph.CompatibilityRelation compat;
 
     /**
-     * Constructor for the class that calculates the splitting graph
+     * Constructor for the class that calculates the Splitting Graph
      *
      * @param  A                        the Automaton wrapped in {@link FingerprintAutomaton} for which the Splitting
      *                                      Graph will be calculated
@@ -47,11 +47,10 @@ public final class FingerprintSplittingGraphExtraction {
     }
 
     /**
-     * Constructor for the class that calculates the splitting graph
+     * Constructor for the class that calculates the Splitting Graph
      *
      * @param  A                        the Automaton wrapped in {@link FingerprintAutomaton} for which the Splitting
-     *                                      Graph will be
-     *                                      calculated
+     *                                      Graph will be calculated
      * @param  compat                   the compatibility relation to be used to determine if states can be
      *                                      distinguished
      *
@@ -69,14 +68,14 @@ public final class FingerprintSplittingGraphExtraction {
     }
 
     /**
-     * Constructs a complete splitting graph for S.
+     * Constructs a complete Splitting Graph for S.
      * Uses a FIFO worklist of leaves containing incompatible pairs.
      * If a leaf cannot be split yet (waiting for an LCA to be created by
      * another split), it is deferred to the back of the queue.
      * The stall counter caps re-queuing: if nothing in the worklist can be
      * split, the remaining leaves are genuinely unsplittable.
      *
-     * @return the splittingGraph
+     * @return the Splitting Graph
      */
     public FingerprintSplittingGraph build() {
         LOGGER.info("Compute Splitting Graph");
@@ -121,9 +120,9 @@ public final class FingerprintSplittingGraphExtraction {
     }
 
     /**
-     * Attempts to split leaf l in splitting graph Y. Prefers output split over input split.
+     * Attempts to split leaf l in Splitting Graph Y. Prefers output split over input split.
      *
-     * @param  Y the splitting graph
+     * @param  Y the Splitting graph
      * @param  l leaf to be split
      *
      * @return   Returns true if a split was performed, false if not yet possible.
@@ -137,9 +136,9 @@ public final class FingerprintSplittingGraphExtraction {
     }
 
     /**
-     * Attempts to split leaf l on output in splitting graph Y. Prefers output split over input split.
+     * Attempts to split leaf l on output in Splitting Graph Y. Prefers output split over input split.
      *
-     * @param  Y the splitting graph
+     * @param  Y the Splitting Graph
      * @param  l leaf to be split
      *
      * @return   Returns true if a split was performed, false if not yet possible.
@@ -196,14 +195,13 @@ public final class FingerprintSplittingGraphExtraction {
     }
 
     /**
-     * Attempts to split leaf l on input in splitting graph Y. Prefers output split over input split.
+     * Attempts to split leaf l on input in Splitting Graph Y. Prefers output split over input split.
      *
-     * @param  Y the splitting graph
+     * @param  Y the Splitting Graph
      * @param  l leaf to be split
      *
      * @return   Returns true if a split was performed, false if not yet possible. *
      */
-
     private boolean tryInputSplit(FingerprintSplittingGraph Y, Set<Integer> l) {
         FingerprintLTS S = A.getCombined().automaton;
         Map<Integer, Integer> enabledMap = new LinkedHashMap<>();
@@ -256,7 +254,7 @@ public final class FingerprintSplittingGraphExtraction {
 
     /**
      * Ensures every state of l appears in ⋃C, where C is the set of children in
-     * the splitting graph.
+     * the Splitting Graph.
      * Any uncovered states are merged into all the children.
      *
      * @param  l the node l to check coverage

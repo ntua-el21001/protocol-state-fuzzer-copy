@@ -75,16 +75,13 @@ public interface Identifier<M> {
                         return new Node("");
                     }
                 }
-
             }
-
         }
         finally {
             sul.post();
         }
 
         return identifierAdg.getCurrentNode();
-
     }
 
     private static <I, O> void resetSUL(SUL<I, O> sul) {

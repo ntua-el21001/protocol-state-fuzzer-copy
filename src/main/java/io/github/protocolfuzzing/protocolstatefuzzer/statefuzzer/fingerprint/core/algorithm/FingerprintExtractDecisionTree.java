@@ -127,7 +127,7 @@ public class FingerprintExtractDecisionTree {
         if (P.isEmpty())
             return null; // No states to distinguish, return null (no node)
 
-        // Base case: all current states ara compatible
+        // Base case: all current states are compatible
         if (compat.allCompatible(P)) {
             // If stuck states is empty then we are at a leaf
             if (stuckStates.isEmpty()
@@ -229,7 +229,7 @@ public class FingerprintExtractDecisionTree {
 
     /**
      * Among candidate LCAs, choose the one whose first split label is
-     * injective for the most incompatible pairs in P (Definition 33).
+     * injective for the most incompatible pairs in P.
      * Injectivity: µ is injective for P if for all q≠q' ∈ P with q≬q':
      * T(q,µ)↓ ∧ T(q',µ)↓ ∧ T(q,µ) ≬ T(q',µ)
      * OR µ ∈ O \ (out(q) ∩ out(q'))
@@ -470,8 +470,6 @@ public class FingerprintExtractDecisionTree {
      * @param root the root of the ADG
      */
     private static void condense(FingerprintNode root) {
-        // Only meaningful when there are multiple models to distinguish
-        // if (allModels.size() <= 1) return;
         boolean changed = true;
         while (changed)
             changed = condensePass(root);
@@ -490,15 +488,6 @@ public class FingerprintExtractDecisionTree {
         boolean changed = false;
         for (FingerprintNode c: new ArrayList<>(node.getChildren().values()))
             changed |= condensePass(c);
-
-        // // Remove leaves covering all models (no distinguishing power left)
-        // for (String key : new ArrayList<>(node.getChildren().keySet())) {
-        // FingerprintNode child = node.getChildren().get(key);
-        // if (child.isLeaf() && child.getModels().equals(allModels)) {
-        // node.removeChild(key);
-        // changed = true;
-        // }
-        // }
 
         // Collapse input nodes with a single output child that is a leaf
         for (String key: new ArrayList<>(node.getChildren().keySet())) {

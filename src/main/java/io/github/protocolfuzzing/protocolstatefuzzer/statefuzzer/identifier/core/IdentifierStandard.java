@@ -126,13 +126,9 @@ public class IdentifierStandard<I, O extends MapperOutput<O, P>, P, E>
 
         this.cleanupTasks = new CleanupTasks();
 
-        // AbstractSUL<I, O, E> abstractSUL = sulBuilder.buildSUL(identifierEnabler.getSULConfig(), cleanupTasks);
-        // this.mapper = abstractSUL.getMapper();
-        // this.sul = sulBuilder.buildWrapper().wrap(abstractSUL).getWrappedSUL();
-
         this.suls = new ArrayList<>();
 
-        // set up wrapped SUL (System Under Learning)
+        // set up wrapped SUL
         SULConfig sulConfig = identifierEnabler.getSULConfig();
         for (int i = 0; i < learnerConfig.getEquivalenceThreadCount(); i++) {
             SULConfig config = (i == 0) ? sulConfig : sulConfig.cloneWithThreadId(i);

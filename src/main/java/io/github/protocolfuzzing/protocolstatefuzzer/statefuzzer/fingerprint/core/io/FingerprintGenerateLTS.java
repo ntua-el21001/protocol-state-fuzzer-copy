@@ -86,7 +86,7 @@ public class FingerprintGenerateLTS {
     /**
      * Number of inputs
      *
-     * @return returns the number of distinct inputs
+     * @return the number of distinct inputs
      */
     public int numInputs() {
         return inputs.size();
@@ -95,7 +95,7 @@ public class FingerprintGenerateLTS {
     /**
      * Number of outputs
      *
-     * @return returns the number of distinct outputs
+     * @return the number of distinct outputs
      */
     public int numOutputs() {
         return outputs.size();
@@ -231,9 +231,7 @@ public class FingerprintGenerateLTS {
             catch (Exception e) {
                 LOGGER.error("Error while getting transition");
             }
-
         }
-
         return result;
     }
 
@@ -508,7 +506,7 @@ public class FingerprintGenerateLTS {
     }
 
     /**
-     * Represents a transition in a Mealy Machine in a quatruple of strings
+     * Represents a transition in a Mealy Machine in a quadruple of strings
      */
     private static class MealyTransition {
         private final String src;

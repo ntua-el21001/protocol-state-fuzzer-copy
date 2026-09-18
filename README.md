@@ -33,7 +33,8 @@ ProtocolState-Fuzzer supports the following functionality for a protocol-specifi
 3. Timing the implementation on test input sequences to suggest timeout values
    for avoiding time-related non-determinism during Learning or Testing.
 4. Differential testing on learned models to detect behavioral differences.
-5. Extract a fingerprint (Decision Tree) from a set of learned models, or use a fingerprint to identify the model
+5. Extract a fingerprint (Decision Tree) from a set of learned models, or
+6. Use a fingerprint to identify the state machine model of the implementation
 
 More information about the functionality of the first three of these modes and
 the architecture of ProtocolState-Fuzzer can be found in the following [open access paper
@@ -358,7 +359,7 @@ java -jar specific-fuzzer.jar fingerprint -models path/to/models [-additional_pa
 Additional Fingerprint Extraction Parameters:
 
 -output
-  The custom name to save the adg, defaults to adg.dot if not provided
+  The custom name to save the ADG, defaults to adg.dot if not provided
 ```
 
 ## Identification
@@ -377,7 +378,7 @@ Additional Identification Parameters:
   the learning alphabet will be used
 
 -conformance path/to/models
-  If a fdirectory containing directories of models is provided, identification performs a
+  If a directory containing directories of models is provided, identification performs a
   final conformance/equivalence test to avoid false matches. The directory should
   contain directories named exactly as the models in the provided ADG and contain a dot file
   named learnedModel.dot
